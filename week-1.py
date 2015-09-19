@@ -30,17 +30,20 @@ cards = range(10)
 class Player:
     
     # create here two local variables to store a unique ID for each player and the player's current 'pot' of money
-    # [FILL IN YOUR VARIABLES HERE]
+    inputID = 0
+    startingPot = 0
     
     # in the __init__() function, use the two input variables to initialize the ID and starting pot of each player
     
     def __init__(self, inputID, startingPot):
-        # [CREATE YOUR INITIALIZATIONS HERE]
+        self.inputID = inputID
+        self.startingPot = startingPot
         
     # create a function for playing the game. This function should take on input for the card of the dealer.
     # it should then take a random card from 
     
     def play(self, dealerCard):
+        playerCard = random.choice(cards)
         # [CREATE CODE FOR SELECTING A RANDOM CARD]
         
         # here we should have a conditional that tests the player's card value against the dealer card
@@ -49,16 +52,24 @@ class Player:
         # the 'pot' variable tracks the player's money
         
         if playerCard < dealerCard:
+            self.startingPot -= gameStake
+            print 'You Lose!'
+            print 'Player' + str(self.inputID) + ' has a current pot of ' + str(self.startingPot)
             # [INCREMENT THE PLAYER'S POT, AND RETURN A MESSAGE]
         else:
+            self.startingPot += gameStake
+            print 'You Win!'
+            print 'Player' + str(self.inputID) + ' has a current pot of ' + str(self.startingPot)
             # [INCREMENT THE PLAYER'S POT, AND RETURN A MESSAGE]
         
     # create an accessor function to return the current value of the player's pot
     def returnPot(self):
+        return str(self.startingPot)
         # [FILL IN THE RETURN STATEMENT]
         
     # create an accessor function to return the player's ID
     def returnID(self):
+        return str(self.inputID)
         # [FILL IN THE RETURN STATEMENT]
 
 
@@ -70,6 +81,8 @@ def playHand(players):
     
     for player in players:
         dealerCard = random.choice(cards)
+        player.play(dealerCard)
+
         #[EXECUTE THE PLAY() FUNCTION FOR EACH PLAYER USING THE DEALER CARD, AND PRINT OUT THE RESULTS]
         
 # Next we will define a function that will check the balances of each player, and print out a message with the
@@ -78,6 +91,7 @@ def playHand(players):
 def checkBalances(players):
     
     for player in players:
+        print 'Player' + player.returnID() + player.returnPot() 
         #[PRINT OUT EACH PLAYER'S BALANCE BY USING EACH PLAYER'S ACCESSOR FUNCTIONS]
   
   
